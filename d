@@ -79,7 +79,7 @@ local LocalPlayer = PlayerService.LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 
 -- Assuming your Interface contains a Frame named "MainFrame" or something similar
-local MainFrame = Interface:FindFirstChild("MainFrame")
+local MainFrame = Interface:FindFirstChild("Frame")
 
 --[[ UI Toggle Functionality (Right Control Key) ]]-----------------
 InputService.InputBegan:Connect(function(input, gameProcessed)
