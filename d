@@ -73,13 +73,15 @@ local GuiService = game:GetService("GuiService")
 local InputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local PlayerService = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
-local UserInputService = game:GetService("UserInputService")
 
 local LocalPlayer = PlayerService.LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 
+-- Assuming your Interface contains a Frame named "MainFrame" or something similar
+local MainFrame = Interface:FindFirstChild("MainFrame")
+
+--[[ UI Toggle Functionality (Right Control Key) ]]-----------------
 InputService.InputBegan:Connect(function(input, gameProcessed)
     if gameProcessed then return end -- Ignore if the input is already processed by the game (like typing in a textbox)
 
@@ -87,14 +89,23 @@ InputService.InputBegan:Connect(function(input, gameProcessed)
         -- Toggle the UI visibility
         if Library.Opened then
             -- Close the UI if it's opened
-            Library.Opened:TweenPosition(UDim2.new(0.5, 0, 0.5, 0), "Out", "Quad", 0.3, true) -- Move it off-screen
-            Library.Opened.Visible = false -- Optionally hide it
+            Library.Opened.Enabled = false -- Disable the ScreenGui to hide it
+            
+            -- Optionally, you can also animate the frame (if you have a frame to animate)
+            if MainFrame then
+                MainFrame:TweenPosition(UDim2.new(0.5, 0, 0.5, 0), "Out", "Quad", 0.3, true) -- Move it off-screen
+            end
+
             Library.Opened = nil -- Mark it as closed
         else
             -- Open the UI if it's closed
             Library.Opened = Interface -- Assuming Interface is the main UI element
-            Library.Opened.Visible = true
-            Library.Opened:TweenPosition(UDim2.new(0.5, -Interface.Size.X.Offset/2, 0.5, -Interface.Size.Y.Offset/2), "Out", "Quad", 0.3, true) -- Animate it into position
+            Library.Opened.Enabled = true -- Enable the ScreenGui to show it
+            
+            -- Optionally, you can animate the frame (if you have a frame to animate)
+            if MainFrame then
+                MainFrame:TweenPosition(UDim2.new(0.5, -MainFrame.Size.X.Offset/2, 0.5, -MainFrame.Size.Y.Offset/2), "Out", "Quad", 0.3, true) -- Animate it into position
+            end
         end
     end
 end)
